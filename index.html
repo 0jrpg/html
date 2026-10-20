@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meu acompanhamento • Semaglutida</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2e;--panel2:#18233b;--text:#edf3ff;--muted:#a7b5d0;--line:#293653;--mint:#7ce6c0;--blue:#8cb8ff;--amber:#ffd18a;--red:#ff9aab}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(ellipse at top left,#182849 0%,var(--bg) 55%);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:24px 16px 56px}
+header{padding:26px 0 20px}.eyebrow{color:var(--mint);font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.76rem}
+h1{font-size:clamp(1.8rem,5vw,3rem);line-height:1.08;margin:.4rem 0 .7rem;letter-spacing:-.04em}
+.sub{color:var(--muted);max-width:760px;margin:0}
+.notice{margin:20px 0;padding:16px 18px;border:1px solid #705a34;background:#2a241b;border-radius:16px;color:#ffedcc}
+.notice strong{color:var(--amber)} .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:16px}
+.card{background:linear-gradient(145deg,rgba(24,35,59,.96),rgba(18,26,46,.96));border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 12px 32px #0002}
+.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}
+h2{font-size:1.1rem;margin:0 0 12px} .muted{color:var(--muted)} .small{font-size:.85rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{padding:14px;border:1px solid var(--line);border-radius:14px;background:#0d1528}
+.stat b{display:block;font-size:1.45rem;color:var(--mint)}.stat span{font-size:.8rem;color:var(--muted)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}
+button,select,input,textarea{font:inherit;color:var(--text);background:#0c1426;border:1px solid #354462;border-radius:10px;padding:10px 12px}
+button{cursor:pointer;font-weight:700}button:hover{border-color:var(--mint)}button.primary{background:var(--mint);color:#0a1820;border-color:var(--mint)}
+button.ghost{background:transparent}button:focus,input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:2px}
+label{display:block;font-size:.84rem;color:var(--muted);margin:10px 0 5px}input,select,textarea{width:100%}
+.monthnav{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}.monthnav h2{margin:0;font-size:1.1rem}
+.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.dayname{text-align:center;color:var(--muted);font-size:.75rem;padding:4px 0}
+.day{min-height:88px;border:1px solid var(--line);background:#0d1528;border-radius:11px;padding:7px;position:relative;overflow:hidden}
+.day.empty{background:transparent;border-color:transparent}.day .num{font-size:.78rem;color:var(--muted)}
+.day .dose{font-size:.7rem;line-height:1.25;margin-top:5px;color:var(--blue)}
+.day.planned{border-color:#3b6384}.day.taken{background:#12372f;border-color:#327c67}.day.taken .num{color:var(--mint)}.day.missed{border-color:#80505a;background:#2d1a28}
+.day.today{outline:2px solid var(--amber);outline-offset:-2px}
+.day button{padding:3px 5px;font-size:.68rem;margin-top:5px;width:100%;border-radius:7px}
+.pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:.74rem;font-weight:750;background:#26324b;color:var(--muted)}
+.pill.ok{background:#153b32;color:var(--mint)}.pill.warn{background:#3a2d1c;color:var(--amber)}
+.checklist{display:grid;gap:10px}.check{display:flex;gap:10px;align-items:flex-start;color:var(--muted)}.check input{width:auto;margin-top:5px;accent-color:var(--mint)}
+hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+footer{margin-top:18px;color:var(--muted);font-size:.8rem}
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#e6fff6;color:#0b2720;padding:10px 16px;border-radius:999px;font-weight:700;display:none;box-shadow:0 8px 30px #0005}
+@media(max-width:760px){.span8,.span4,.span6{grid-column:span 12}.day{min-height:74px;padding:5px}.day button{font-size:.62rem}.stats{grid-template-columns:1fr 1fr}.wrap{padding:14px 10px 40px}}
+@media print{body{background:white;color:#111}.card,.day{box-shadow:none;background:white;color:#111;border-color:#bbb}.muted,.day .num,.day .dose{color:#333}.notice{background:#fff8e8;color:#111}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="eyebrow">Acompanhamento pessoal</div>
+<h1>Meu calendário de tratamento</h1>
+<p class="sub">Calendário semanal com início planejado em quinta-feira, 22 de outubro de 2026, e acompanhamento por dois anos. Use para registrar o que aconteceu — não para decidir doses.</p>
+</header>
+
+<div class="notice"><strong>Importante — confira antes da primeira aplicação.</strong> Este calendário não confirma se o medicamento, a dose ou o esquema são apropriados para você. Como você tem 13 anos, siga apenas a orientação individual do endocrinologista e de seu responsável. Não converta cliques em mg nem aumente a dose usando este calendário. A troca da caneta deve respeitar a bula da sua apresentação e a orientação do farmacêutico/médico; não é possível prever com segurança pela contagem de cliques.</div>
+
+<div class="grid">
+<section class="card span12">
+<h2>Resumo</h2>
+<div class="stats">
+<div class="stat"><b id="countTaken">0</b><span>aplicações registradas</span></div>
+<div class="stat"><b id="countPlanned">104</b><span>datas semanais no plano</span></div>
+<div class="stat"><b id="nextDate">22/10/2026</b><span>próxima data não registrada</span></div>
+</div>
+<p class="small muted" style="margin-bottom:0">Os dados são guardados neste navegador por cookies. Se limpar os dados do site, trocar de navegador ou aparelho, o histórico poderá desaparecer. Use “Exportar backup” para guardar uma cópia.</p>
+</section>
+
+<section class="card span8">
+<div class="monthnav">
+<button class="ghost" id="prev" aria-label="Mês anterior">← Anterior</button>
+<h2 id="monthTitle">Outubro 2026</h2>
+<button class="ghost" id="next" aria-label="Próximo mês">Próximo →</button>
+</div>
+<div class="calendar" id="calendar"></div>
+<div class="row small muted" style="margin-top:12px">
+<span class="pill">Planejada</span><span class="pill ok">Registrada</span><span class="pill warn">Data passada sem registro</span>
+</div>
+</section>
+
+<section class="card span4">
+<h2>Registrar aplicação</h2>
+<p class="small muted">Selecione a data e marque somente depois de aplicar conforme a receita.</p>
+<label for="doseDate">Data da aplicação</label><input type="date" id="doseDate">
+<label for="doseNote">Observações (opcional)</label><textarea id="doseNote" rows="3" placeholder="Ex.: como me senti, dúvidas para a consulta"></textarea>
+<button class="primary" id="markTaken" style="width:100%;margin-top:12px">Marcar como aplicada</button>
+<button class="ghost" id="undoTaken" style="width:100%;margin-top:8px">Remover registro dessa data</button>
+</section>
+
+<section class="card span6">
+<h2>Controle da caneta</h2>
+<p class="small muted">Registre a data em que a caneta foi aberta. O lembrete abaixo usa 42 dias como referência geral mencionada na bula; confirme o prazo na bula exata da sua caixa e com o farmacêutico.</p>
+<label for="penDate">Data em que abriu a caneta</label><input type="date" id="penDate">
+<div style="margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#0d1528">
+<div class="small muted">Lembrete de prazo após abertura</div><div id="penReminder" style="font-weight:800;margin-top:3px">Ainda não informado</div>
+<div class="small muted" id="penRemaining"></div>
+</div>
+<p class="small muted">Este lembrete não calcula quanto medicamento resta e não determina a data de troca. Não use uma caneta além do prazo da bula, mesmo que reste solução. Não descarte nem troque com base apenas nesta estimativa.</p>
+</section>
+
+<section class="card span6">
+<h2>Dose e acompanhamento médico</h2>
+<p class="small muted">Para evitar erro, este arquivo não sugere doses, aumentos ou equivalência de cliques. Registre aqui apenas informações confirmadas na receita, se desejar.</p>
+<label for="doctorPlan">Orientação confirmada pelo endocrinologista</label><textarea id="doctorPlan" rows="3" placeholder="Anote o plano escrito pelo médico, sem alterar a receita"></textarea>
+<label for="reviewDate">Próximo retorno</label><input type="date" id="reviewDate">
+<button class="primary" id="savePlan" style="width:100%;margin-top:12px">Salvar informações</button>
+</section>
+
+<section class="card span6">
+<h2>Checklist de segurança</h2>
+<div class="checklist">
+<label class="check"><input type="checkbox" id="check1"> Meu responsável sabe quando será a aplicação e acompanha o tratamento.</label>
+<label class="check"><input type="checkbox" id="check2"> Confirmei marca, apresentação e dose com o endocrinologista/farmacêutico.</label>
+<label class="check"><input type="checkbox" id="check3"> Sei como conservar a caneta e descartar as agulhas com segurança.</label>
+<label class="check"><input type="checkbox" id="check4"> Sei quem contatar em caso de efeito colateral ou dúvida.</label>
+</div>
+<button class="primary" id="saveChecks" style="width:100%;margin-top:12px">Salvar checklist</button>
+</section>
+
+<section class="card span6">
+<h2>Quando procurar ajuda</h2>
+<p class="small">Avise imediatamente um responsável e procure atendimento urgente se ocorrer dor abdominal forte ou persistente, vômitos repetidos, incapacidade de beber líquidos, desmaio ou reação alérgica com dificuldade para respirar/inchaço da face ou garganta. Para sintomas menos intensos, fale com o responsável e com a equipe médica antes de mudar ou suspender a dose.</p>
+<hr>
+<h2>Backup e privacidade</h2>
+<div class="row">
+<button id="export">Exportar backup</button>
+<button id="importBtn">Importar backup</button>
+<button class="ghost" id="print">Imprimir calendário</button>
+<input type="file" id="importFile" accept="application/json" hidden>
+</div>
+<p class="small muted">O arquivo não envia informações pela internet. Os dados ficam neste navegador. O backup pode conter informações pessoais de saúde; guarde-o com cuidado.</p>
+<button class="ghost" id="clear" style="border-color:#80505a;color:#ffb0bd">Apagar todos os dados locais</button>
+</section>
+</div>
+<footer>Calendário pessoal, não substitui receita, bula, consulta ou orientação de emergência. Datas previstas: 22/10/2026 a 12/10/2028, uma vez por semana. Reavalie o plano com o endocrinologista ao longo do tratamento.</footer>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+const START = new Date(2026,9,22,12);
+const END = new Date(2028,9,19,12);
+const STORAGE = 'meuCalendarioSemaglutida_v1';
+const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const weekdays = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+let view = new Date(START.getFullYear(), START.getMonth(), 1);
+let state = {taken:{},notes:{},penDate:'',doctorPlan:'',reviewDate:'',checks:[false,false,false,false]};
+function dateKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function parseDate(s){if(!s)return null;const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12)}
+function fmt(d){return d?d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'}):'—'}
+function schedule(){let a=[];for(let d=new Date(START);d<=END;d.setDate(d.getDate()+7))a.push(new Date(d));return a}
+const dates = schedule();
+function setCookie(name,value,days=730){const exp=new Date(Date.now()+days*864e5).toUTCString();document.cookie=`${name}=${encodeURIComponent(value)}; expires=${exp}; path=/; SameSite=Lax`;}
+function getCookie(name){const prefix=name+'=';for(const c of document.cookie.split(';')){const t=c.trim();if(t.startsWith(prefix))return decodeURIComponent(t.slice(prefix.length));}return null;}
+function save(){setCookie(STORAGE,JSON.stringify(state),730);updateStats();toast('Salvo neste navegador');}
+function load(){try{const raw=getCookie(STORAGE);if(raw)state={...state,...JSON.parse(raw)};}catch(e){}}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>el.style.display='none',2200)}
+function isScheduled(d){return d>=START&&d<=END&&d.getDay()===4&&dates.some(x=>dateKey(x)===dateKey(d))}
+function render(){
+ const cal=document.getElementById('calendar');cal.innerHTML='';
+ weekdays.forEach(w=>{let el=document.createElement('div');el.className='dayname';el.textContent=w;cal.append(el)});
+ const first=new Date(view.getFullYear(),view.getMonth(),1,12), last=new Date(view.getFullYear(),view.getMonth()+1,0,12);
+ for(let i=0;i<first.getDay();i++){let e=document.createElement('div');e.className='day empty';cal.append(e)}
+ for(let n=1;n<=last.getDate();n++){
+  const d=new Date(view.getFullYear(),view.getMonth(),n,12), k=dateKey(d), scheduled=dates.some(x=>dateKey(x)===k);
+  const el=document.createElement('div');el.className='day'+(scheduled?' planned':'')+(state.taken[k]?' taken':'')+(!state.taken[k]&&scheduled&&d<new Date(new Date().toDateString())?' missed':'')+(k===dateKey(new Date())?' today':'');
+  const num=document.createElement('div');num.className='num';num.textContent=n;el.append(num);
+  if(scheduled){const dose=document.createElement('div');dose.className='dose';dose.textContent=state.taken[k]?'✓ Aplicada':'Aplicação prevista';el.append(dose);
+   const b=document.createElement('button');b.textContent=state.taken[k]?'Ver registro':'Registrar';b.addEventListener('click',()=>{document.getElementById('doseDate').value=k;document.getElementById('doseNote').value=state.notes[k]||'';document.getElementById('doseDate').scrollIntoView({behavior:'smooth',block:'center'});});el.append(b)}
+  cal.append(el)
+ }
+ document.getElementById('monthTitle').textContent=months[view.getMonth()]+' '+view.getFullYear();
+ updateStats();updatePenReminder();
+}
+function updateStats(){
+ const count=Object.keys(state.taken||{}).filter(k=>state.taken[k]).length;
+ document.getElementById('countTaken').textContent=count;
+ document.getElementById('countPlanned').textContent=dates.length;
+ const next=dates.find(d=>!state.taken[dateKey(d)]);
+ document.getElementById('nextDate').textContent=fmt(next);
+}
+function updatePenReminder(){
+ const d=parseDate(state.penDate);const title=document.getElementById('penReminder'),remain=document.getElementById('penRemaining');
+ if(!d){title.textContent='Ainda não informado';remain.textContent='Registre a data de abertura para ver um lembrete.';return}
+ const deadline=new Date(d);deadline.setDate(deadline.getDate()+42);
+ title.textContent='Verificar prazo na bula até '+fmt(deadline);
+ const days=Math.ceil((deadline-new Date())/864e5);
+ remain.textContent=days>0?`Referência de 42 dias: faltam ${days} dia(s). Confirme o prazo da sua apresentação.`:days===0?'A referência de 42 dias é hoje. Confira a bula e fale com o farmacêutico.':'A referência de 42 dias passou. Não use sem confirmar a orientação da bula/farmacêutico.';
+}
+document.getElementById('prev').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render()};
+document.getElementById('next').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render()};
+document.getElementById('markTaken').onclick=()=>{
+ const k=document.getElementById('doseDate').value;if(!k){toast('Escolha uma data primeiro');return}
+ state.taken[k]=true;const note=document.getElementById('doseNote').value.trim();if(note)state.notes[k]=note;else delete state.notes[k];save();render();
+};
+document.getElementById('undoTaken').onclick=()=>{const k=document.getElementById('doseDate').value;if(!k){toast('Escolha uma data primeiro');return}delete state.taken[k];delete state.notes[k];save();render()};
+document.getElementById('penDate').onchange=e=>{state.penDate=e.target.value;save();updatePenReminder()};
+document.getElementById('savePlan').onclick=()=>{state.doctorPlan=document.getElementById('doctorPlan').value;state.reviewDate=document.getElementById('reviewDate').value;save()};
+document.getElementById('saveChecks').onclick=()=>{state.checks=[1,2,3,4].map(i=>document.getElementById('check'+i).checked);save()};
+document.getElementById('export').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup-calendario-tratamento.json';a.click();URL.revokeObjectURL(a.href)};
+document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const obj=JSON.parse(await f.text());if(!obj||typeof obj!=='object'||!obj.taken)throw Error();state={...state,...obj};setCookie(STORAGE,JSON.stringify(state),730);document.getElementById('penDate').value=state.penDate||'';document.getElementById('doctorPlan').value=state.doctorPlan||'';document.getElementById('reviewDate').value=state.reviewDate||'';(state.checks||[]).forEach((v,i)=>{if(i<4)document.getElementById('check'+(i+1)).checked=!!v});render();toast('Backup importado')}catch(err){alert('Não foi possível importar. Selecione um backup JSON válido.')}};
+document.getElementById('print').onclick=()=>window.print();
+document.getElementById('clear').onclick=()=>{if(confirm('Apagar todos os registros e informações salvos neste navegador? Esta ação não pode ser desfeita.')){state={taken:{},notes:{},penDate:'',doctorPlan:'',reviewDate:'',checks:[false,false,false,false]};setCookie(STORAGE,'',-1);document.getElementById('penDate').value='';document.getElementById('doctorPlan').value='';document.getElementById('reviewDate').value='';[1,2,3,4].forEach(i=>document.getElementById('check'+i).checked=false);render();toast('Dados locais apagados')}};
+load();
+document.getElementById('penDate').value=state.penDate||'';
+document.getElementById('doctorPlan').value=state.doctorPlan||'';
+document.getElementById('reviewDate').value=state.reviewDate||'';
+(state.checks||[]).forEach((v,i)=>{if(i<4)document.getElementById('check'+(i+1)).checked=!!v});
+document.getElementById('doseDate').value=dateKey(START);
+render();
+})();
+</script>
+</body>
+</html>
